@@ -12,47 +12,35 @@ namespace BusBoard.ConsoleApp
     {
         static async Task Main(string[] args)
         {
-            // const string stopCode = "490008660N";
+            var client = new TflClient();
+            
             while (true)
             {
                 Console.WriteLine("What station would you like to check?");
                 var stopCode = Console.ReadLine();
 
-                var hasGoodResults = await GetArrivalsTo(stopCode);
-
-                if (!hasGoodResults)
+                var response = await client.GetArrivals(stopCode);
+                
+                if (response.statusCode != 200 || response.services == null)
                 {
-                    Console.WriteLine("No results :(");
+                    Console.WriteLine("Uhoh! (Error code {0})", response.statusCode);
+                    continue;
+                }
+
+                try
+                {
+                    response.services.RemoveRange(5, response.services.Count - 5);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    // log that response contains fewer than 5 arrivals
+                }
+            
+                foreach (var service in response.services)
+                {
+                    service.DisplayService();
                 }
             }
-        }
-
-        static async Task<bool> GetArrivalsTo(string stopCode)
-        {
-            var client = new TflClient();
-            var response = await client.GetArrivals(stopCode);
-
-            if (response.statusCode != 200 || response.services == null)
-            {
-                Console.WriteLine("Uhoh! (Error code {0})", response.statusCode);
-                return false;
-            }
-
-            try
-            {
-                response.services.RemoveRange(5, response.services.Count - 5);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // log that response contains fewer than 5 arrivals
-            }
-            
-            foreach (var service in response.services)
-            {
-                service.DisplayService();
-            }
-
-            return true;
         }
     }
 }
