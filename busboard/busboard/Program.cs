@@ -12,34 +12,77 @@ namespace BusBoard.ConsoleApp
     {
         static async Task Main(string[] args)
         {
-            var client = new TflClient();
+            var tflClient = new TflClient();
+            var postcodesClient = new PostcodesClient();
             
             while (true)
             {
-                Console.WriteLine("What station would you like to check?");
-                var stopCode = Console.ReadLine();
+                Console.WriteLine("Give me a postcode please :)");
+                var postcode = Console.ReadLine();
 
-                var response = await client.GetArrivals(stopCode);
-                
-                if (response.statusCode != 200 || response.services == null)
+                if (postcode == null)
                 {
-                    Console.WriteLine("Uhoh! (Error code {0})", response.statusCode);
+                    Console.WriteLine("Why no provide postcode? Try again smh");
                     continue;
                 }
 
-                try
+                var postcodesResponse = await postcodesClient.GetPostcodeInformation(postcode);
+
+                if (postcodesResponse.result == null || postcodesResponse.status != 200)
                 {
-                    response.services.RemoveRange(5, response.services.Count - 5);
+                    Console.WriteLine("Uhoh (postcode edition)! (Error code {0})", postcodesResponse.status);
+                    continue;
                 }
-                catch (ArgumentOutOfRangeException)
+
+                var stopPointsWithinRadiusResponse = await tflClient.GetStopPointsWithinRadius(
+                    postcodesResponse.result.latitude,
+                    postcodesResponse.result.longitude
+                );
+                
+                if (stopPointsWithinRadiusResponse.statusCode != 200 || stopPointsWithinRadiusResponse.data == null)
                 {
-                    // log that response contains fewer than 5 arrivals
+                    Console.WriteLine("Uhoh (TfL edition)! (Error code {0})", stopPointsWithinRadiusResponse.statusCode);
+                    continue;
                 }
-            
-                foreach (var service in response.services)
+                
+                Console.WriteLine($"Nearest Bus Stop: {stopPointsWithinRadiusResponse.data.stopPoints[0].stopLetter}");
+                Console.WriteLine("Next two scheduled services:");
+
+                var firstArrivalsResponse =
+                    await tflClient.GetArrivals(stopPointsWithinRadiusResponse.data.stopPoints[0].naptanId, 2);
+                
+                if (firstArrivalsResponse.statusCode != 200 || firstArrivalsResponse.services == null)
+                {
+                    Console.WriteLine("Uhoh (TfL edition)! (Error code {0})", stopPointsWithinRadiusResponse.statusCode);
+                    continue;
+                }
+
+                foreach (var service in firstArrivalsResponse.services)
                 {
                     service.DisplayService();
                 }
+                
+                Console.WriteLine($"Nearest Bus Stop: {stopPointsWithinRadiusResponse.data.stopPoints[1].stopLetter}");
+                Console.WriteLine("Next two scheduled services:");
+
+                var secondArrivalsResponse =
+                    await tflClient.GetArrivals(stopPointsWithinRadiusResponse.data.stopPoints[1].naptanId, 2);
+                
+                if (secondArrivalsResponse.statusCode != 200 || secondArrivalsResponse.services == null)
+                {
+                    Console.WriteLine("Uhoh (TfL edition)! (Error code {0})", stopPointsWithinRadiusResponse.statusCode);
+                    continue;
+                }
+
+                foreach (var service in secondArrivalsResponse.services)
+                {
+                    service.DisplayService();
+                }
+
+                // foreach (var service in tflResponse.services)
+                // {
+                //     service.DisplayService();
+                // }
             }
         }
     }

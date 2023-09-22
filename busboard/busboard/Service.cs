@@ -5,6 +5,7 @@ public class Service
     public string lineName { get; set; }
     public string lineId { get; set; }
     public string destinationName { get; set; }
+    public int timeToStation { get; set; }
 
     public void DisplayService()
     {
