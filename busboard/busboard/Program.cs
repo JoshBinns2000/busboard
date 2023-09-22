@@ -9,5 +9,9 @@ var client = new RestClient(options);
 const string stopCode = "490008660N";
 
 var request = new RestRequest($"/{stopCode}/Arrivals");
-var response = await client.GetAsync(request);
-Console.WriteLine(response.Content);
+var response = await client.GetAsync<List<Service>>(request);
+
+foreach (var service in response)
+{
+    service.DisplayService();
+}
