@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Slight bug where async operations are out of order, but it's not worth fixing on a Friday
+
 namespace BusBoard.ConsoleApp
 {
     class Program
