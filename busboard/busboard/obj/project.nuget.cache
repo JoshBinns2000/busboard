@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "l4JOxFTt1YdTxXEFw26CwZ35ycxLQujSSNStIbdBHRpvJZG+2AAr61OrqEJ31H7A9Q//aijpqIyH2zZZc5+JZQ==",
+  "dgSpecHash": "mDAmJSCC2DU+sf4B8xbunfkcfEREzqUAeXznAly4pc3HYx0V+6CaEXXkNAO2bHlDacnk9NxTH61vbRwEVkbPNA==",
   "success": true,
   "projectFilePath": "C:\\Users\\josbin\\Work\\Training\\busboard\\busboard\\busboard\\busboard.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\josbin\\.nuget\\packages\\restsharp\\110.2.1-alpha.0.13\\restsharp.110.2.1-alpha.0.13.nupkg.sha512",
+    "C:\\Users\\josbin\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
+    "C:\\Users\\josbin\\.nuget\\packages\\system.text.json\\7.0.3\\system.text.json.7.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

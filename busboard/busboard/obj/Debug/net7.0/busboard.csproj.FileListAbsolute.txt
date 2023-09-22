@@ -1,0 +1,17 @@
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\bin\Debug\net7.0\busboard.exe
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\bin\Debug\net7.0\busboard.deps.json
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\bin\Debug\net7.0\busboard.runtimeconfig.json
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\bin\Debug\net7.0\busboard.dll
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\bin\Debug\net7.0\busboard.pdb
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\bin\Debug\net7.0\RestSharp.dll
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.csproj.AssemblyReference.cache
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.AssemblyInfoInputs.cache
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.AssemblyInfo.cs
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.csproj.CoreCompileInputs.cache
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.csproj.CopyComplete
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.dll
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\refint\busboard.dll
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.pdb
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\busboard.genruntimeconfig.cache
+C:\Users\josbin\Work\Training\busboard\busboard\busboard\obj\Debug\net7.0\ref\busboard.dll
