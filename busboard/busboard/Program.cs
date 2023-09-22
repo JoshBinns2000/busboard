@@ -1,17 +1,58 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-const string baseUrl = "https://api.tfl.gov.uk/StopPoint";
-var options = new RestClientOptions(baseUrl);
-var client = new RestClient(options);
-
-const string stopCode = "490008660N";
-
-var request = new RestRequest($"/{stopCode}/Arrivals");
-var response = await client.GetAsync<List<Service>>(request);
-
-foreach (var service in response)
+namespace BusBoard.ConsoleApp
 {
-    service.DisplayService();
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            // const string stopCode = "490008660N";
+            while (true)
+            {
+                Console.WriteLine("What station would you like to check?");
+                var stopCode = Console.ReadLine();
+
+                var hasGoodResults = await GetArrivalsTo(stopCode);
+
+                if (!hasGoodResults)
+                {
+                    Console.WriteLine("No results :(");
+                }
+            }
+        }
+
+        static async Task<bool> GetArrivalsTo(string stopCode)
+        {
+            var client = new TflClient();
+            var response = await client.GetArrivals(stopCode);
+
+            if (response.statusCode != 200 || response.services == null)
+            {
+                Console.WriteLine("Uhoh! (Error code {0})", response.statusCode);
+                return false;
+            }
+
+            try
+            {
+                response.services.RemoveRange(5, response.services.Count - 5);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // log that response contains fewer than 5 arrivals
+            }
+            
+            foreach (var service in response.services)
+            {
+                service.DisplayService();
+            }
+
+            return true;
+        }
+    }
 }
